@@ -1,0 +1,60 @@
+*{
+    margin:0;
+    padding:0;
+}
+html, body {
+    background-color: white;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    background-image: url(halo.webp);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#game-container {
+    position: relative;
+    width: 484px;
+    height: 484px;
+    background-color: #0f0f0f;
+}
+
+#player1, #player2 {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+#player1 {
+    background-color: red;
+}
+
+#player2 {
+    background-color: blue;
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@media screen and (max-width: 1000px) {
+    #game-container {
+        position: relative;
+        width: 245px;
+        height: 245px;
+        background-color: black;
+    }
+    
+    svg {
+        top: -120px;
+        left: -120px;
+        scale: 50%;
+    }
+}
