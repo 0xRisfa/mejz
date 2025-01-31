@@ -135,6 +135,10 @@ button:hover {
     padding: 10px;
   }
 
+  #title {
+    display: none;
+  }
+
   /* Adjust mobile controls to ensure they never overlap */
   .mobile-controls {
     display: flex;
