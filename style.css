@@ -1,168 +1,188 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    background-color: black;
-    color: white;
-    background-image: url(halo.webp);
-    background-size: cover;
-    background-attachment: fixed;
+html,
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+  background-image: url(halo.webp);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: white;
-    background-color: #333;
-    border: 2px solid white;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    min-width: 120px;
-    min-height: 40px;
+  padding: 15px 30px;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: white;
+  background-color: #333;
+  border: 2px solid white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  min-width: 120px;
+  min-height: 40px;
 }
 
 button:hover {
-    background-color: #555;
-    transform: scale(1.05);
+  background-color: #555;
+  transform: scale(1.05);
 }
 
 .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 #instructions-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 #instructions-content {
-    background: white;
-    color: black;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 90%;
-    max-width: 500px;
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
 }
 
 #close-instructions {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 #list {
-    list-style: none;
+  list-style: none;
 }
 
 #game-container {
-    position: relative;
-    width: 90vw;
-    height: 90vw;
-    max-width: 500px;
-    max-height: 500px;
-    background-color: #0f0f0f;
-    user-select: none;
-    overflow: hidden; /* Ensures nothing overflows */
+  position: relative;
+  width: 90vw;
+  height: 90vw;
+  max-width: 500px;
+  max-height: 500px;
+  background-color: #0f0f0f;
+  user-select: none;
+  overflow: hidden; /* Ensures nothing overflows */
 }
 
-#player1, #player2 {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
+#player1,
+#player2 {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
 
 #player1 {
-    background-color: red;
+  background-color: red;
 }
 
 #player2 {
-    background-color: blue;
+  background-color: blue;
 }
 
 #maze {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* Hide controls by default */
 .mobile-controls {
-    display: none;
+  display: none;
 }
 
-/* Show controls only on mobile devices */
+/* Ensure full height layout with controls above and below the maze */
 @media screen and (max-width: 768px) {
-    .mobile-controls {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        background-color: rgba(0, 0, 0, 0.8);
-        border-radius: 10px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        max-width: 500px;
-        z-index: 1000;
-    }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    padding: 10px;
+  }
 
-    #mobile-controls-top {
-        position: absolute;
-        top: 10px;
-    }
+  /* Adjust mobile controls to ensure they never overlap */
+  .mobile-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+  }
 
-    #mobile-controls-bottom {
-        position: absolute;
-        bottom: 10px;
-    }
+  /* Layout - Controls at the top */
+  #mobile-controls-top {
+    order: 1; /* Ensures it stays above the maze */
+  }
 
-    .control-button {
-        padding: 15px;
-        font-size: 1.5rem;
-        background-color: #333;
-        border: 2px solid white;
-        border-radius: 10px;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+  /* Maze container should take up the majority of the screen */
+  #game-container {
+    order: 2;
+    flex-grow: 1; /* Allows it to resize while keeping space for controls */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 60vh; /* Prevents it from being too big */
+  }
 
-    .control-button:hover {
-        background-color: #555;
-        transform: scale(1.05);
-    }
+  /* Layout - Controls at the bottom */
+  #mobile-controls-bottom {
+    order: 3; /* Ensures it stays below the maze */
+  }
+
+  /* Button styling */
+  .control-button {
+    padding: 15px;
+    font-size: 1.5rem;
+    background-color: #333;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .control-button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+  }
 }
