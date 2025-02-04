@@ -3,31 +3,49 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 html,
 body {
+  width: 100%;
   height: 100%;
+  font-family: ui-rounded, "Hiragino Maru Gothic ProN", Quicksand, Comfortaa,
+    Manjari, "Arial Rounded MT", "Arial Rounded MT Bold", Calibri,
+    source-sans-pro, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
   background-image: url(halo.webp);
   background-size: cover;
   background-attachment: fixed;
 }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 10vh;
+  height: 10vh;
+  padding: 1vh 2vw;
+  background-color: #ffffff;
+  margin-bottom: 10vh;
+  z-index: 1;
+  font-size: 2vw;
+}
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin-bottom: 20px;
+  font-size: 4vw;
   text-align: center;
+}
+
+#main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
 }
 
 button {
   padding: 15px 30px;
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: 2vw;
   color: white;
   background-color: #333;
   border: 2px solid white;
@@ -89,13 +107,15 @@ button:hover {
 
 #game-container {
   position: relative;
-  width: 90vw;
-  height: 90vw;
-  max-width: 500px;
-  max-height: 500px;
+  width: 100%;
+  height: 100%;
   background-color: #0f0f0f;
   user-select: none;
-  overflow: hidden; /* Ensures nothing overflows */
+  overflow: hidden;
+}
+#maze {
+  width: 100%;
+  height: 100%;
 }
 
 #player1,
@@ -114,68 +134,41 @@ button:hover {
   background-color: blue;
 }
 
-#maze {
-  width: 100%;
-  height: 100%;
-}
-
 /* Hide controls by default */
 .mobile-controls {
   display: none;
 }
 
-/* Ensure full height layout with controls above and below the maze */
+/* Show controls only on mobile devices */
 @media screen and (max-width: 768px) {
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100vh; /* Full viewport height */
-    padding: 10px;
+  #main {
+    display: inline;
   }
-
-  #title {
+  header {
     display: none;
   }
-
-  /* Adjust mobile controls to ensure they never overlap */
   .mobile-controls {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
-    padding: 10px;
-    width: 90%;
-    max-width: 400px;
+    position: fixed;
+    height: 200px;
+    left: 50%;
+    width: 100%;
     z-index: 1000;
   }
 
-  /* Layout - Controls at the top */
   #mobile-controls-top {
-    order: 1; /* Ensures it stays above the maze */
+    position: inherit;
   }
 
-  /* Maze container should take up the majority of the screen */
-  #game-container {
-    order: 2;
-    flex-grow: 1; /* Allows it to resize while keeping space for controls */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 60vh; /* Prevents it from being too big */
-  }
-
-  /* Layout - Controls at the bottom */
   #mobile-controls-bottom {
-    order: 3; /* Ensures it stays below the maze */
+    position: inherit;
   }
 
-  /* Button styling */
   .control-button {
-    padding: 15px;
     font-size: 1.5rem;
     background-color: #333;
     border: 2px solid white;

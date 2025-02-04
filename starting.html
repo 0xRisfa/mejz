@@ -1,143 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>From - Maze Game</title>
-    <link rel="stylesheet" href="style.css">
-    <!--<style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
-            background-image: url(halo.webp);
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            color: white;
-            background-color: #333;
-            border: 2px solid white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        button:hover {
-            background-color: #555;
-            transform: scale(1.05);
-        }
-
-        #instructions-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        #instructions-content {
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 90%;
-            width: 500px;
-        }
-
-        #close-instructions {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #list{
-            list-style: none;
-        }
-    </style>-->
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <h1>From - The Maze</h1>
     <div class="button-container">
-        <button id="play-game">Play</button>
-        <button id="show-instructions">Instructions & Credits</button>
+      <button id="play-game">Play</button>
+      <button id="show-instructions">Instructions & Credits</button>
     </div>
 
     <div id="instructions-modal">
-        <div id="instructions-content">
-            <h2>Instructions</h2>
-            <p>Navigate the maze using the controls:</p>
-            <ul id="list">
-                <li><strong>Player 1:</strong> Use W, A, S, D to move.</li>
-                <li><strong>Player 2:</strong> Use Arrow Keys to move.</li>
-            </ul>
-            <p>Both players must reach the end of the maze together to win. Beware of obstacles and stay within the distance limit between players!</p>
-            <h2>Credits</h2>
-            <p>Game by Faris</p>
-            <button id="close-instructions">Close</button>
-        </div>
+      <div id="instructions-content">
+        <h2>Instructions</h2>
+        <p>Navigate the maze using the controls:</p>
+        <ul id="list">
+          <li><strong>Player 1:</strong> Use W, A, S, D to move.</li>
+          <li><strong>Player 2:</strong> Use Arrow Keys to move.</li>
+        </ul>
+        <p>
+          Both players must reach the end of the maze together to win. Beware of
+          obstacles and stay within the distance limit between players!
+        </p>
+        <h2>Credits</h2>
+        <p>Game by Faris</p>
+        <button id="close-instructions">Close</button>
+      </div>
     </div>
 
     <script>
-        const playButton = document.getElementById('play-game');
-        const instructionsButton = document.getElementById('show-instructions');
-        const instructionsModal = document.getElementById('instructions-modal');
-        const closeInstructionsButton = document.getElementById('close-instructions');
+      const playButton = document.getElementById("play-game");
+      const instructionsButton = document.getElementById("show-instructions");
+      const instructionsModal = document.getElementById("instructions-modal");
+      const closeInstructionsButton =
+        document.getElementById("close-instructions");
 
-        playButton.addEventListener('click', () => {
-            window.location.href = 'index.html';
-        });
+      playButton.addEventListener("click", () => {
+        window.location.href = "index.html";
+      });
 
-        instructionsButton.addEventListener('click', () => {
-            instructionsModal.style.display = 'flex';
-        });
+      instructionsButton.addEventListener("click", () => {
+        instructionsModal.style.display = "flex";
+      });
 
-        closeInstructionsButton.addEventListener('click', () => {
-            instructionsModal.style.display = 'none';
-        });
+      closeInstructionsButton.addEventListener("click", () => {
+        instructionsModal.style.display = "none";
+      });
 
-        // Close the modal when clicking outside the content
-        instructionsModal.addEventListener('click', (event) => {
-            if (event.target === instructionsModal) {
-                instructionsModal.style.display = 'none';
-            }
-        });
+      // Close the modal when clicking outside the content
+      instructionsModal.addEventListener("click", (event) => {
+        if (event.target === instructionsModal) {
+          instructionsModal.style.display = "none";
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
