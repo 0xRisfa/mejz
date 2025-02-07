@@ -44,7 +44,6 @@ h1 {
 }
 
 button {
-  padding: 15px 30px;
   font-size: 2vw;
   color: white;
   background-color: #333;
@@ -52,8 +51,8 @@ button {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
-  min-width: 120px;
-  min-height: 40px;
+  min-width: 100px;
+  min-height: 20px;
 }
 
 button:hover {
@@ -154,20 +153,13 @@ button:hover {
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     position: fixed;
-    height: 200px;
+    height: 20vh;
     left: 50%;
     width: 100%;
     z-index: 1000;
-  }
-
-  #mobile-controls-top {
     position: inherit;
   }
-
-  #mobile-controls-bottom {
-    position: inherit;
-  }
-
+  
   .control-button {
     font-size: 1.5rem;
     background-color: #333;
