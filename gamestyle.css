@@ -132,7 +132,7 @@
 
   #game-container {
     position: relative;
-    height: calc(100vh - 40vh);
+    height: calc(100dvh - 40vh);
     width: 100%;
     background-color: #0f0f0f;
     user-select: none;
