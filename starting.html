@@ -5,57 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>From - Maze Game</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="startingstyle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
-    <h1>From - The Maze</h1>
-    <div class="button-container">
-      <button id="play-game">Play</button>
-      <button id="show-instructions">Instructions & Credits</button>
-    </div>
+    <header>
+      <h1>From - The Maze</h1>
+      <p class="header-text">
+        Navigate the maze, but beware, the monsters are watching...
+      </p>
+    </header>
 
-    <div id="instructions-modal">
-      <div id="instructions-content">
-        <h2>Instructions</h2>
-        <p>Navigate the maze using the controls:</p>
-        <ul id="list">
-          <li><strong>Player 1:</strong> Use W, A, S, D to move.</li>
-          <li><strong>Player 2:</strong> Use Arrow Keys to move.</li>
-        </ul>
-        <p>
-          Both players must reach the end of the maze together to win. Beware of
-          obstacles and stay within the distance limit between players!
-        </p>
-        <h2>Credits</h2>
-        <p>Game by Faris</p>
-        <button id="close-instructions">Close</button>
-      </div>
+    <div class="startmenu-button-container">
+      <button id="play-game" class="startmenu-button">Play</button>
+      <button id="show-instructions" class="startmenu-button">
+        Instructions
+      </button>
     </div>
 
     <script>
       const playButton = document.getElementById("play-game");
-      const instructionsButton = document.getElementById("show-instructions");
-      const instructionsModal = document.getElementById("instructions-modal");
-      const closeInstructionsButton =
-        document.getElementById("close-instructions");
 
       playButton.addEventListener("click", () => {
         window.location.href = "index.html";
       });
 
-      instructionsButton.addEventListener("click", () => {
-        instructionsModal.style.display = "flex";
-      });
-
-      closeInstructionsButton.addEventListener("click", () => {
-        instructionsModal.style.display = "none";
-      });
-
-      // Close the modal when clicking outside the content
-      instructionsModal.addEventListener("click", (event) => {
-        if (event.target === instructionsModal) {
-          instructionsModal.style.display = "none";
-        }
-      });
+      document
+        .getElementById("show-instructions")
+        .addEventListener("click", async () => {
+          await Swal.fire({
+            title: "Instructions",
+            html: `
+              <p>Navigate the maze using the controls:</p>
+              <ul id="list">
+                <li><strong>Player 1:</strong> Use W, A, S, D to move.</li>
+                <li><strong>Player 2:</strong> Use Arrow Keys to move.</li>
+              </ul>
+              <p>
+                Both players must reach the end of the maze together to win. Beware of
+                obstacles and stay within the distance limit between players!
+              </p>
+              <h2>Credits</h2>
+              <p>Game by Faris</p>
+            `,
+            customClass: {
+              popup: "custom-swal",
+            },
+            confirmButtonText: "Close",
+          });
+        });
     </script>
   </body>
 </html>

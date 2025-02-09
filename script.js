@@ -1,10 +1,45 @@
+document.getElementById("menu-button").addEventListener("click", async () => {
+  await Swal.fire({
+    title: "Menu",
+    position: "top-start",
+    width: 300,
+    grow: "column",
+    showCloseButton: true,
+    showConfirmButton: false,
+    html: `
+      <button id="check-scores" class="swal-menu-btn">Best Times</button>
+      <button id="play-again" class="swal-menu-btn">Play Again</button>
+      <button id="go-home" class="swal-menu-btn">Back to Start</button>
+    `,
+    showClass: {
+      popup: "animate__animated animate__fadeInRight animate__faster",
+    },
+    hideClass: {
+      popup: "animate__animated animate__fadeOutRight animate__faster",
+    },
+    didOpen: (popup) => {
+      popup.querySelector("#check-scores").addEventListener("click", () => {
+        Swal.fire("Best Times", "Feature coming soon!", "info");
+      });
+
+      popup.querySelector("#play-again").addEventListener("click", () => {
+        window.location.reload();
+      });
+
+      popup.querySelector("#go-home").addEventListener("click", () => {
+        window.location.href = "starting.html";
+      });
+    },
+  });
+});
+
 const mazeLines = document.querySelectorAll("svg line");
 const player1Elem = document.getElementById("player1");
 const player2Elem = document.getElementById("player2");
 const solutionPath = document.getElementById("solution-path");
 
-let player1 = new SAT.Circle(new SAT.Vector(240, 300), 5);
-let player2 = new SAT.Circle(new SAT.Vector(225, 300), 5);
+let player1 = new SAT.Circle(new SAT.Vector(250, 470), 5);
+let player2 = new SAT.Circle(new SAT.Vector(250, 470), 5);
 
 const speed = 2;
 const maxDistance = 100;
@@ -41,6 +76,40 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
+
+const highScoreList = document.getElementById("high-score-list");
+
+// Load stored high scores or initialize an empty array
+let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+// Function to update the high score list UI
+function updateHighScoreDisplay() {
+  highScoreList.innerHTML = highScores.length
+    ? highScores
+        .map((score, index) => `<li>${index + 1}. ${score} sec</li>`)
+        .join("")
+    : "<li>No scores yet</li>";
+}
+function updateTimer() {
+  if (!endConditionMet) {
+    // Only update if the game isn't over
+    let now = Date.now();
+    let elapsedTime = ((now - startTime) / 1000).toFixed(2);
+    document.getElementById("timer").textContent = `Time: ${elapsedTime}s`;
+    requestAnimationFrame(updateTimer);
+  }
+}
+updateTimer();
+
+// Function to save a new high score
+function saveHighScore(time) {
+  highScores.push(time);
+  highScores.sort((a, b) => a - b); // ascending sort
+  highScores = highScores.slice(0, 10); // store only the top 10
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  updateHighScoreDisplay();
+}
+updateHighScoreDisplay();
 
 function setupTouchControls() {
   const buttons = document.querySelectorAll(".control-button");
@@ -170,14 +239,15 @@ function animateSolutionPath() {
   return solutionPath.animate(
     [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
     {
-      duration: 5000, // Adjust animation duration as needed
+      duration: 5000,
       easing: "ease-in-out",
     }
-  ).finished; // Return a promise that resolves when the animation is finished
+  ).finished;
 }
 
 function displayCompletionOverlay() {
   const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+  saveHighScore(timeTaken); // Save the time when the game is completed
 
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
@@ -206,11 +276,10 @@ function displayCompletionOverlay() {
   button.style.cursor = "pointer";
   button.addEventListener("click", () => {
     overlay.remove();
-    // Optionally, you can reset the game state here
-    window.location.reload(); // For simplicity, reload the page to restart the game
+    window.location.reload(); // Reload the game to restart
   });
-  overlay.appendChild(button);
 
+  overlay.appendChild(button);
   document.body.appendChild(overlay);
 }
 

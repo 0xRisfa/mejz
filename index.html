@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>From - Maze Game</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="gamestyle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <header>
+      <button id="menu-button">☰</button>
       <h1>From - The Maze</h1>
-      <p>Navigate the maze, but beware, the monsters are watching...</p>
+      <p class="header-text">
+        Navigate the maze, but beware, the monsters are watching...
+      </p>
     </header>
 
-    <!-- Mobile Controls for Player 1 (Top) -->
+    <!-- Mobilne kontrole na vrhu -->
     <div id="mobile-controls-top" class="mobile-controls">
       <button class="control-button" id="up1">⬆️</button>
       <div>
@@ -21,6 +26,10 @@
       </div>
       <button class="control-button" id="down1">⬇️</button>
     </div>
+
+    <div id="timer">Time: 0.00s</div>
+
+    <!-- Glavni del strani -->
     <div id="main">
       <div id="game-container">
         <svg id="maze" viewBox="0 0 484 484">
@@ -475,8 +484,16 @@
           />
         </svg>
       </div>
+
+      <div id="high-score-tracker">
+        <h2>🏆 Top 10</h2>
+        <ul id="high-score-list">
+          <li>No scores yet</li>
+        </ul>
+      </div>
     </div>
-    <!-- Mobile Controls for Player 2 (Bottom) -->
+
+    <!-- Mobilne kontrole na dnu -->
     <div id="mobile-controls-bottom" class="mobile-controls">
       <button class="control-button" id="up2">⬆️</button>
       <div>

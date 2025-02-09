@@ -1,0 +1,145 @@
+#main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+}
+
+#timer {
+  display: flex;
+  justify-content: center;
+  font-size: 2vh;
+  font-weight: bold;
+  color: white;
+  background: black;
+  border-radius: 1vh;
+  width: 56vw;
+  padding: 1vh;
+  margin: auto;
+  margin-bottom: 1vh;
+}
+
+#game-container {
+  position: relative;
+  width: 35vw;
+  height: 35vw;
+  background-color: #0f0f0f;
+  user-select: none;
+  overflow: hidden;
+}
+#maze {
+  width: 100%;
+  height: 100%;
+}
+
+#high-score-tracker {
+  width: 20vw;
+  height: 35vw;
+  margin-left: 1vw;
+  background: #222;
+  color: white;
+  font-family: Arial, sans-serif;
+  border-radius: 1vw;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+#high-score-tracker h2 {
+  text-align: center;
+  font-size: 2vw;
+}
+
+#high-score-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+#high-score-list li {
+  padding: 1vh;
+  font-size: 1vw;
+  border-bottom: 0.2vh solid #555;
+}
+
+#menu-button {
+  font-size: 2.5vh;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 1vh;
+  width: 5vh;
+  height: 5vh;
+}
+
+.swal-menu-btn {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 16px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.swal-menu-btn:hover {
+  background: #666;
+}
+
+.mobile-controls {
+  display: none;
+}
+
+/* Show controls only on mobile devices */
+@media screen and (max-width: 768px) {
+  header {
+    display: none;
+  }
+
+  .mobile-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    position: fixed;
+    height: 20vh;
+    left: 50%;
+    width: 100%;
+    z-index: 1000;
+    position: inherit;
+  }
+  #mobile-controls-bottom {
+    bottom: 0;
+    left: 0;
+  }
+
+  .control-button {
+    font-size: 1.5rem;
+    background-color: #333;
+    border: 2px solid white;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    padding: 0.3vh 5vw;
+  }
+
+  #high-score-tracker {
+    display: none;
+  }
+
+  #game-container {
+    position: relative;
+    height: calc(100vh - 40vh);
+    width: 100%;
+    background-color: #0f0f0f;
+    user-select: none;
+    overflow: hidden;
+  }
+  #maze {
+    width: 100%;
+    height: 100%;
+  }
+}
