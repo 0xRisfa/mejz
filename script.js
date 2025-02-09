@@ -1,65 +1,24 @@
-const menuButton = document.getElementById("menu-button");
-
-menuButton.addEventListener("click", async () => {
-  // Hide the menu button
-  menuButton.style.display = "none";
-
-  await Swal.fire({
-    title: "Menu",
-    position: "top-start",
-    width: 300,
-    grow: "column",
-    showCloseButton: true,
-    showConfirmButton: false,
-    html: `
-      <button id="check-scores" class="swal-menu-btn">Best Times</button>
-      <button id="play-again" class="swal-menu-btn">Play Again</button>
-      <button id="go-home" class="swal-menu-btn">Back to Start</button>
-    `,
-    didOpen: (popup) => {
-      // Add event listeners after menu opens
-      popup.querySelector("#play-again").addEventListener("click", () => {
-        window.location.reload();
-      });
-
-      popup.querySelector("#go-home").addEventListener("click", () => {
-        window.location.href = "starting.html";
-      });
-
-      // Only show "Best Times" button on mobile and open highscores.html
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-      if (isMobile) {
-        popup.querySelector("#check-scores").addEventListener("click", () => {
-          window.location.href = "highscores.html";
-        });
-      } else {
-        popup.querySelector("#check-scores").style.display = "none";
-      }
-    },
-    willClose: () => {
-      menuButton.style.display = "block"; // Show the menu button again when closed
-    },
-  });
-});
-
+//velikost body-ja = velikost okna (za pravilno delovanje na telefonu)
 function adjustViewportHeight() {
   document.body.style.height = `${window.innerHeight}px`;
 }
-
-// Adjust height on load and resize
 window.addEventListener("load", adjustViewportHeight);
 window.addEventListener("resize", adjustViewportHeight);
 
+// SPREMENLJIVKE IN KONSTANTE
 const mazeLines = document.querySelectorAll("svg line");
 const player1Elem = document.getElementById("player1");
 const player2Elem = document.getElementById("player2");
 const solutionPath = document.getElementById("solution-path");
 
+const endZone = new SAT.Box(new SAT.Vector(0, 482), 500, 500).toPolygon();
+
 let player1 = new SAT.Circle(new SAT.Vector(250, 470), 5);
 let player2 = new SAT.Circle(new SAT.Vector(250, 470), 5);
 
-const speed = 2;
-const maxDistance = 100;
+const speed = 2; //hitrost
+const maxDistance = 100; //najvecja dovoljena razdalja med playerji
+
 let endConditionMet = false;
 let startTime = Date.now();
 let endTime = 0;
@@ -86,20 +45,30 @@ const mobileKeys = {
   right2: false,
 };
 
+const highScoreList = document.getElementById("high-score-list");
+// shranimo podatke iz lokalnega pomnilnika v highScores
+let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+//
+//
+//
+//
+//
+
+//poslusanje tipk
 document.addEventListener("keydown", (e) => {
   keys[e.key] = true;
 });
-
 document.addEventListener("keyup", (e) => {
   keys[e.key] = false;
 });
 
-const highScoreList = document.getElementById("high-score-list");
+//
+//
+//
+//
 
-// Load stored high scores or initialize an empty array
-let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-// Function to update the high score list UI
+// update highscore lista
 function updateHighScoreDisplay() {
   highScoreList.innerHTML = highScores.length
     ? highScores
@@ -107,27 +76,22 @@ function updateHighScoreDisplay() {
         .join("")
     : "<li>No scores yet</li>";
 }
-function updateTimer() {
-  if (!endConditionMet) {
-    // Only update if the game isn't over
-    let now = Date.now();
-    let elapsedTime = ((now - startTime) / 1000).toFixed(2);
-    document.getElementById("timer").textContent = `Time: ${elapsedTime}s`;
-    requestAnimationFrame(updateTimer);
-  }
-}
-updateTimer();
-
-// Function to save a new high score
+// funkcija za vpis novega score-a
 function saveHighScore(time) {
   highScores.push(time);
   highScores.sort((a, b) => a - b); // ascending sort
-  highScores = highScores.slice(0, 10); // store only the top 10
+  highScores = highScores.slice(0, 10); // vzamemo samo prvih 10
   localStorage.setItem("highScores", JSON.stringify(highScores));
   updateHighScoreDisplay();
 }
 updateHighScoreDisplay();
 
+//
+//
+//
+//
+
+// Uporaba gumbov na mobitelu
 function setupTouchControls() {
   const buttons = document.querySelectorAll(".control-button");
   buttons.forEach((button) => {
@@ -152,6 +116,18 @@ function setupTouchControls() {
 }
 setupTouchControls();
 
+function goBack() {
+  window.history.back();
+}
+
+//
+//
+//
+//
+//
+
+// METODE ZA FUNKCIONALNOST IGRICE
+
 function detectCollision(circle) {
   for (let line of mazeLines) {
     const x1 = parseFloat(line.getAttribute("x1"));
@@ -175,7 +151,7 @@ function handleMovement(circle, stationaryCircle, keys = {}) {
   const originalPos = new SAT.Vector(circle.pos.x, circle.pos.y);
   const newPos = new SAT.Vector(circle.pos.x, circle.pos.y);
 
-  // Move vertically
+  // navpicno premikanje
   if (keys.w) newPos.y -= speed;
   if (keys.s) newPos.y += speed;
   const tempCircleY = new SAT.Circle(
@@ -186,7 +162,7 @@ function handleMovement(circle, stationaryCircle, keys = {}) {
     circle.pos.y = newPos.y;
   }
 
-  // Move horizontally
+  // vodoravno premikanje
   if (keys.a) newPos.x -= speed;
   if (keys.d) newPos.x += speed;
   const tempCircleX = new SAT.Circle(
@@ -197,7 +173,7 @@ function handleMovement(circle, stationaryCircle, keys = {}) {
     circle.pos.x = newPos.x;
   }
 
-  // Restrict position if too far from other circle
+  // omeji premik, ce sta predalec
   restrictPosition(circle, stationaryCircle, originalPos);
 }
 
@@ -211,23 +187,21 @@ function restrictPosition(movingCircle, stationaryCircle, originalPos) {
     const restrictedX = stationaryCircle.pos.x + Math.cos(angle) * maxDistance;
     const restrictedY = stationaryCircle.pos.y + Math.sin(angle) * maxDistance;
 
-    // Check if the restricted position collides with walls
     const restrictedCircle = new SAT.Circle(
       new SAT.Vector(restrictedX, restrictedY),
       movingCircle.r
     );
+
+    // pogleda ce gre pozicija omejenega igralca cez zid. Ce se ne dotika zidu, se premakne
     if (!detectCollision(restrictedCircle)) {
       movingCircle.pos.x = restrictedX;
       movingCircle.pos.y = restrictedY;
     } else {
-      // Reset to the original position if restricted position is invalid
       movingCircle.pos.x = originalPos.x;
       movingCircle.pos.y = originalPos.y;
     }
   }
 }
-
-const endZone = new SAT.Box(new SAT.Vector(0, 482), 500, 500).toPolygon(); // Adjust position and size as needed
 
 function isInEndZone(circle) {
   return SAT.testCirclePolygon(circle, endZone);
@@ -244,7 +218,7 @@ function checkEndCondition() {
 function triggerEndSequence() {
   solutionPath.style.display = "block";
   animateSolutionPath().then(() => {
-    setTimeout(displayCompletionOverlay, 2000); // Show the overlay 2 seconds after animation ends
+    setTimeout(displayCompletionOverlay, 1500);
   });
 }
 
@@ -253,7 +227,6 @@ function animateSolutionPath() {
   solutionPath.style.strokeDasharray = length;
   solutionPath.style.strokeDashoffset = length;
 
-  // Animate the path drawing
   return solutionPath.animate(
     [{ strokeDashoffset: length }, { strokeDashoffset: 0 }],
     {
@@ -265,7 +238,7 @@ function animateSolutionPath() {
 
 function displayCompletionOverlay() {
   const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
-  saveHighScore(timeTaken); // Save the time when the game is completed
+  saveHighScore(timeTaken); // shrani cas
 
   Swal.fire({
     title: "Congratulations! 🎉",
@@ -276,7 +249,7 @@ function displayCompletionOverlay() {
     allowEscapeKey: false,
     backdrop: "rgba(0, 0, 0, 0.75)",
   }).then(() => {
-    window.location.reload(); // Reload the game to restart
+    window.location.reload(); // refresha okno
   });
 }
 
@@ -298,6 +271,13 @@ function update() {
   player1Elem.setAttribute("cy", player1.pos.y);
   player2Elem.setAttribute("cx", player2.pos.x);
   player2Elem.setAttribute("cy", player2.pos.y);
+
+  if (!endConditionMet) {
+    // update timerja, dokler ni konec igre
+    let now = Date.now();
+    let elapsedTime = ((now - startTime) / 1000).toFixed(2);
+    document.getElementById("timer").textContent = `Time: ${elapsedTime}s`;
+  }
 
   requestAnimationFrame(update);
   checkEndCondition();
