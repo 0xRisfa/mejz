@@ -159,17 +159,26 @@
     height: 55%;
   }
 
+  /* Game container: fill screen, but limit overflow */
   #game-container {
     position: relative;
-    height: 100%;
     width: 100%;
+    height: 100%;
     background-color: #0f0f0f;
     user-select: none;
-    overflow: hidden;
+    overflow: hidden; /* Hide anything that exceeds the boundaries */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+  /* Maze needs to be square and fit within the game container */
   #maze {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    max-width: 100%; /* Allow the width to fill container but not exceed it */
+    max-height: 100%; /* Allow the height to fill container but not exceed it */
+    width: auto; /* Let the width adjust, while maintaining aspect ratio */
+    height: auto; /* Let the height adjust, while maintaining aspect ratio */
+    object-fit: contain; /* Ensures it stays within the bounds and doesn't stretch */
+    display: block; /* Ensure it's a block element for proper centering */
   }
 }

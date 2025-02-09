@@ -1,7 +1,7 @@
 const menuButton = document.getElementById("menu-button");
 
 menuButton.addEventListener("click", async () => {
-  // Hide the menu button
+  // skrije menu button
   menuButton.style.display = "none";
 
   await Swal.fire({
@@ -17,7 +17,6 @@ menuButton.addEventListener("click", async () => {
       <button id="go-home" class="swal-menu-btn">Back to Start</button>
     `,
     didOpen: (popup) => {
-      // Add event listeners after menu opens
       popup.querySelector("#play-again").addEventListener("click", () => {
         window.location.reload();
       });
@@ -26,9 +25,8 @@ menuButton.addEventListener("click", async () => {
         window.location.href = "index.html";
       });
 
-      // Only show "Best Times" button on mobile and open highscores.html
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-      if (isMobile) {
+      // best times button samo na telefonu, odpre highscores.html
+      if (window.matchMedia("(max-width: 768px)").matches) {
         popup.querySelector("#check-scores").addEventListener("click", () => {
           window.location.href = "highscores.html";
         });
@@ -41,3 +39,21 @@ menuButton.addEventListener("click", async () => {
     },
   });
 });
+
+// prikaz po koncu
+function displayCompletionOverlay() {
+  const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+  saveHighScore(timeTaken); // shrani cas
+
+  Swal.fire({
+    title: "Congratulations! 🎉",
+    html: `<p>You completed the maze in <strong>${timeTaken} seconds</strong>!</p>`,
+    icon: "success",
+    confirmButtonText: "Play Again",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    backdrop: "rgba(0, 0, 0, 0.75)",
+  }).then(() => {
+    window.location.reload(); // refresha okno
+  });
+}

@@ -236,23 +236,6 @@ function animateSolutionPath() {
   ).finished;
 }
 
-function displayCompletionOverlay() {
-  const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
-  saveHighScore(timeTaken); // shrani cas
-
-  Swal.fire({
-    title: "Congratulations! 🎉",
-    html: `<p>You completed the maze in <strong>${timeTaken} seconds</strong>!</p>`,
-    icon: "success",
-    confirmButtonText: "Play Again",
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    backdrop: "rgba(0, 0, 0, 0.75)",
-  }).then(() => {
-    window.location.reload(); // refresha okno
-  });
-}
-
 function update() {
   handleMovement(player1, player2, {
     w: keys.w || mobileKeys.up1,
