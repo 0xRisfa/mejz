@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>High Scores</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #111;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        background-image: url(halo.webp);
+        background-size: cover;
+        background-attachment: fixed;
+      }
+      #high-score-tracker {
+        width: 80vw;
+        max-width: 400px;
+        background: #222;
+        border-radius: 10px;
+        overflow-y: scroll;
+        scrollbar-width: none;
+      }
+      #high-score-list {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+      }
+      #high-score-tracker h2 {
+        text-align: center;
+        padding: 20px;
+      }
+      #high-score-list li {
+        padding: 10px;
+        border-bottom: 1px solid #555;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background: #444;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="high-score-tracker">
+      <h2>🏆 Top 10 times</h2>
+      <ul id="high-score-list">
+        <li>No scores yet</li>
+      </ul>
+    </div>
+    <button onclick="goBack()">Back</button>
+
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+
+      const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+      const highScoreList = document.getElementById("high-score-list");
+
+      highScoreList.innerHTML = highScores.length
+        ? highScores
+            .map((score, index) => `<li>${index + 1}. ${score} sec</li>`)
+            .join("")
+        : "<li>No scores yet</li>";
+    </script>
+  </body>
+</html>

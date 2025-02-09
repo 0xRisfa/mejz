@@ -32,6 +32,10 @@
   height: 100%;
 }
 
+#solution-path {
+  display: none;
+}
+
 #high-score-tracker {
   width: 20vw;
   height: 35vw;
@@ -63,12 +67,16 @@
 
 #menu-button {
   font-size: 2.5vh;
-  background: #444;
+  background: #0078d7;
   color: white;
   border: none;
   border-radius: 1vh;
-  width: 5vh;
-  height: 5vh;
+  width: 10vh;
+  height: 8vh;
+  position: absolute;
+  bottom: 0;
+  margin: 2%;
+  z-index: 10000;
 }
 
 .swal-menu-btn {
@@ -92,10 +100,28 @@
   display: none;
 }
 
+#check-scores {
+  display: none;
+}
+
 /* Show controls only on mobile devices */
 @media screen and (max-width: 768px) {
   header {
     display: none;
+  }
+
+  #check-scores {
+    display: block;
+  }
+
+  #menu-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 2%;
+    width: 5vh;
+    height: 5vh;
+    z-index: 1;
   }
 
   .mobile-controls {
@@ -108,12 +134,7 @@
     height: 20%;
     left: 50%;
     width: 100%;
-    z-index: 1000;
     position: inherit;
-  }
-  #mobile-controls-bottom {
-    bottom: 0;
-    left: 0;
   }
 
   .control-button {

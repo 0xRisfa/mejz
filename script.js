@@ -1,4 +1,9 @@
-document.getElementById("menu-button").addEventListener("click", async () => {
+const menuButton = document.getElementById("menu-button");
+
+menuButton.addEventListener("click", async () => {
+  // Hide the menu button
+  menuButton.style.display = "none";
+
   await Swal.fire({
     title: "Menu",
     position: "top-start",
@@ -11,17 +16,8 @@ document.getElementById("menu-button").addEventListener("click", async () => {
       <button id="play-again" class="swal-menu-btn">Play Again</button>
       <button id="go-home" class="swal-menu-btn">Back to Start</button>
     `,
-    showClass: {
-      popup: "animate__animated animate__fadeInRight animate__faster",
-    },
-    hideClass: {
-      popup: "animate__animated animate__fadeOutRight animate__faster",
-    },
     didOpen: (popup) => {
-      popup.querySelector("#check-scores").addEventListener("click", () => {
-        Swal.fire("Best Times", "Feature coming soon!", "info");
-      });
-
+      // Add event listeners after menu opens
       popup.querySelector("#play-again").addEventListener("click", () => {
         window.location.reload();
       });
@@ -29,6 +25,19 @@ document.getElementById("menu-button").addEventListener("click", async () => {
       popup.querySelector("#go-home").addEventListener("click", () => {
         window.location.href = "starting.html";
       });
+
+      // Only show "Best Times" button on mobile and open highscores.html
+      const isMobile = window.matchMedia("(max-width: 768px)").matches;
+      if (isMobile) {
+        popup.querySelector("#check-scores").addEventListener("click", () => {
+          window.location.href = "highscores.html";
+        });
+      } else {
+        popup.querySelector("#check-scores").style.display = "none";
+      }
+    },
+    willClose: () => {
+      menuButton.style.display = "block"; // Show the menu button again when closed
     },
   });
 });
@@ -233,6 +242,7 @@ function checkEndCondition() {
 }
 
 function triggerEndSequence() {
+  solutionPath.style.display = "block";
   animateSolutionPath().then(() => {
     setTimeout(displayCompletionOverlay, 2000); // Show the overlay 2 seconds after animation ends
   });
@@ -257,38 +267,17 @@ function displayCompletionOverlay() {
   const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
   saveHighScore(timeTaken); // Save the time when the game is completed
 
-  const overlay = document.createElement("div");
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
-  overlay.style.color = "white";
-  overlay.style.display = "flex";
-  overlay.style.flexDirection = "column";
-  overlay.style.justifyContent = "center";
-  overlay.style.alignItems = "center";
-  overlay.style.fontSize = "24px";
-  overlay.style.zIndex = "1000";
-
-  const message = document.createElement("div");
-  message.textContent = `Congratulations! You completed the maze in ${timeTaken} seconds!`;
-  overlay.appendChild(message);
-
-  const button = document.createElement("button");
-  button.textContent = "Play Again";
-  button.style.marginTop = "20px";
-  button.style.padding = "10px 20px";
-  button.style.fontSize = "18px";
-  button.style.cursor = "pointer";
-  button.addEventListener("click", () => {
-    overlay.remove();
+  Swal.fire({
+    title: "Congratulations! 🎉",
+    html: `<p>You completed the maze in <strong>${timeTaken} seconds</strong>!</p>`,
+    icon: "success",
+    confirmButtonText: "Play Again",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    backdrop: "rgba(0, 0, 0, 0.75)",
+  }).then(() => {
     window.location.reload(); // Reload the game to restart
   });
-
-  overlay.appendChild(button);
-  document.body.appendChild(overlay);
 }
 
 function update() {
