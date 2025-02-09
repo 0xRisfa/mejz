@@ -129,11 +129,13 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
-    position: fixed;
-    height: 20%;
+    height: 25%;
     left: 50%;
     width: 100%;
-    position: inherit;
+  }
+
+  #mobile-controls-top {
+    justify-content: flex-end;
   }
 
   .control-button {
@@ -143,7 +145,7 @@
     border-radius: 1vh;
     color: white;
     cursor: pointer;
-    padding: 0.3vh 5vw;
+    padding: 1vh 5vw;
   }
 
   #high-score-tracker {
