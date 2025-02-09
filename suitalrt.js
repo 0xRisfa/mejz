@@ -49,11 +49,11 @@ function displayCompletionOverlay() {
     title: "Congratulations! 🎉",
     html: `<p>You completed the maze in <strong>${timeTaken} seconds</strong>!</p>`,
     icon: "success",
-    confirmButtonText: "Play Again",
+    confirmButtonText: "Go home",
     allowOutsideClick: false,
     allowEscapeKey: false,
     backdrop: "rgba(0, 0, 0, 0.75)",
   }).then(() => {
-    window.location.reload(); // refresha okno
+    window.location.href = "index.html";
   });
 }

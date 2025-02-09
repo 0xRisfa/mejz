@@ -13,8 +13,8 @@ const solutionPath = document.getElementById("solution-path");
 
 const endZone = new SAT.Box(new SAT.Vector(0, 482), 500, 500).toPolygon();
 
-let player1 = new SAT.Circle(new SAT.Vector(250, 470), 5);
-let player2 = new SAT.Circle(new SAT.Vector(250, 470), 5);
+let player1 = new SAT.Circle(new SAT.Vector(230, 10), 5);
+let player2 = new SAT.Circle(new SAT.Vector(250, 10), 5);
 
 const speed = 2; //hitrost
 const maxDistance = 100; //najvecja dovoljena razdalja med playerji
