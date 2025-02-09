@@ -105,7 +105,7 @@
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     position: fixed;
-    height: 20vh;
+    height: 20%;
     left: 50%;
     width: 100%;
     z-index: 1000;
@@ -117,10 +117,10 @@
   }
 
   .control-button {
-    font-size: 1.5rem;
+    font-size: 3vh;
     background-color: #333;
-    border: 2px solid white;
-    border-radius: 10px;
+    border: 0.1vh solid white;
+    border-radius: 1vh;
     color: white;
     cursor: pointer;
     padding: 0.3vh 5vw;
@@ -130,9 +130,17 @@
     display: none;
   }
 
+  #timer {
+    height: 5%;
+  }
+
+  #main {
+    height: 55%;
+  }
+
   #game-container {
     position: relative;
-    height: calc(100dvh - 40vh);
+    height: 100%;
     width: 100%;
     background-color: #0f0f0f;
     user-select: none;
@@ -141,5 +149,6 @@
   #maze {
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 }

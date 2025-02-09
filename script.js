@@ -33,17 +33,13 @@ document.getElementById("menu-button").addEventListener("click", async () => {
   });
 });
 
-document.getElementById("fullscreen-button").addEventListener("click", () => {
-  if (document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen();
-  } else if (document.documentElement.mozRequestFullScreen) {
-    document.documentElement.mozRequestFullScreen();
-  } else if (document.documentElement.webkitRequestFullscreen) {
-    document.documentElement.webkitRequestFullscreen();
-  } else if (document.documentElement.msRequestFullscreen) {
-    document.documentElement.msRequestFullscreen();
-  }
-});
+function adjustViewportHeight() {
+  document.body.style.height = `${window.innerHeight}px`;
+}
+
+// Adjust height on load and resize
+window.addEventListener("load", adjustViewportHeight);
+window.addEventListener("resize", adjustViewportHeight);
 
 const mazeLines = document.querySelectorAll("svg line");
 const player1Elem = document.getElementById("player1");
