@@ -1,0 +1,37 @@
+html,
+body {
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+#high-score-tracker {
+  width: 80vw;
+  max-width: 400px;
+  background: #222;
+  border-radius: 10px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+#high-score-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+#high-score-tracker h2 {
+  text-align: center;
+  padding: 20px;
+}
+#high-score-list li {
+  padding: 10px;
+  border-bottom: 1px solid #555;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
